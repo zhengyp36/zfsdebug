@@ -1,0 +1,8 @@
+stap -d kernel -d spl -ve '
+global cnt
+probe module("zfs").function("vdev_label_read") {
+    printf("[%d]vdev_label_read/>\n", cnt)
+    cnt++
+    print_backtrace()
+}
+' 2>&1 | tee log.txt
